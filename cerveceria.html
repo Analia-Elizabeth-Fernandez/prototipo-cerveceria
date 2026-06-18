@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forja Negra — Cervecería Artesanal</title>
+<meta name="description" content="Forja Negra, cervecería artesanal. Elaboración propia, sin atajos, sin prisa.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --negro: #100b08;
+    --carbon: #1a1410;
+    --ambar: #d97b29;
+    --ambar-claro: #f0a857;
+    --espuma: #f3e7d1;
+    --hueso: #cdbfa8;
+    --linea: rgba(243,231,209,0.12);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--negro);
+    color:var(--espuma);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  h1,h2,h3,.display{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+
+  .eyebrow{
+    font-family:'Bebas Neue', sans-serif;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--ambar);
+    font-size:0.85rem;
+  }
+
+  a{color:inherit;text-decoration:none;}
+
+  img{display:block;width:100%;height:100%;object-fit:cover;}
+
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed;
+    top:0;left:0;right:0;
+    z-index:100;
+    padding:22px 0;
+    transition:background 0.35s ease, padding 0.35s ease, border-color 0.35s ease;
+    border-bottom:1px solid transparent;
+  }
+  header.scrolled{
+    background:rgba(16,11,8,0.92);
+    backdrop-filter:blur(10px);
+    padding:14px 0;
+    border-color:var(--linea);
+  }
+  nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .logo{
+    font-family:'Bebas Neue', sans-serif;
+    font-size:1.5rem;
+    letter-spacing:0.06em;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .logo span{color:var(--ambar);}
+  .navlinks{
+    display:flex;
+    gap:38px;
+    font-size:0.92rem;
+  }
+  .navlinks a{
+    position:relative;
+    opacity:0.85;
+    transition:opacity 0.2s;
+  }
+  .navlinks a:hover{opacity:1;}
+  .navlinks a::after{
+    content:'';
+    position:absolute;
+    left:0;bottom:-6px;
+    width:0;height:1px;
+    background:var(--ambar);
+    transition:width 0.25s ease;
+  }
+  .navlinks a:hover::after{width:100%;}
+  .nav-cta{
+    border:1px solid var(--ambar);
+    color:var(--ambar-claro);
+    padding:9px 20px;
+    border-radius:2px;
+    font-size:0.85rem;
+    letter-spacing:0.04em;
+    transition:background 0.25s, color 0.25s;
+  }
+  .nav-cta:hover{background:var(--ambar);color:var(--negro);}
+  .burger{display:none;background:none;border:none;color:var(--espuma);font-size:1.6rem;cursor:pointer;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    height:100vh;
+    min-height:680px;
+    display:flex;
+    align-items:flex-end;
+    overflow:hidden;
+  }
+  .hero-media{
+    position:absolute;
+    inset:0;
+    z-index:0;
+  }
+  .hero-media img{
+    width:100%;height:100%;
+    object-fit:cover;
+    filter:saturate(1.05) contrast(1.05);
+  }
+  .hero-media::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:
+      linear-gradient(180deg, rgba(16,11,8,0.25) 0%, rgba(16,11,8,0.35) 40%, rgba(16,11,8,0.97) 100%),
+      linear-gradient(90deg, rgba(16,11,8,0.55) 0%, rgba(16,11,8,0.05) 45%);
+  }
+  .hero-content{
+    position:relative;
+    z-index:1;
+    width:100%;
+    padding-bottom:90px;
+  }
+  .hero-content .eyebrow{margin-bottom:18px;display:block;}
+  .hero-content h1{
+    font-size:clamp(3rem, 7vw, 6rem);
+    line-height:0.95;
+    color:var(--espuma);
+    max-width:780px;
+  }
+  .hero-content h1 em{
+    font-style:italic;
+    color:var(--ambar-claro);
+  }
+  .hero-sub{
+    margin-top:24px;
+    max-width:480px;
+    color:var(--hueso);
+    font-size:1.08rem;
+  }
+  .hero-actions{
+    margin-top:40px;
+    display:flex;
+    gap:18px;
+    align-items:center;
+  }
+  .btn-primary{
+    background:var(--ambar);
+    color:var(--negro);
+    padding:15px 30px;
+    border-radius:2px;
+    font-weight:600;
+    font-size:0.95rem;
+    letter-spacing:0.02em;
+    transition:transform 0.2s ease, background 0.2s ease;
+    display:inline-block;
+  }
+  .btn-primary:hover{background:var(--ambar-claro);transform:translateY(-2px);}
+  .btn-ghost{
+    color:var(--espuma);
+    font-size:0.95rem;
+    border-bottom:1px solid var(--linea);
+    padding-bottom:4px;
+    transition:border-color 0.2s;
+  }
+  .btn-ghost:hover{border-color:var(--ambar);}
+
+  .hero-scroll{
+    position:absolute;
+    right:32px;
+    bottom:36px;
+    z-index:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+    color:var(--hueso);
+    font-size:0.75rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+  }
+  .hero-scroll .line{
+    width:1px;height:46px;
+    background:linear-gradient(to bottom, var(--ambar), transparent);
+    animation:scrollpulse 1.8s ease-in-out infinite;
+  }
+  @keyframes scrollpulse{
+    0%,100%{opacity:0.3;}
+    50%{opacity:1;}
+  }
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{
+    position:relative;
+    padding:140px 0;
+  }
+  .section-head{
+    margin-bottom:64px;
+    max-width:620px;
+  }
+  .section-head .eyebrow{margin-bottom:16px;display:block;}
+  .section-head h2{
+    font-size:clamp(2.2rem, 4vw, 3.2rem);
+    color:var(--espuma);
+  }
+  .section-head p{
+    margin-top:18px;
+    color:var(--hueso);
+    font-size:1.05rem;
+  }
+
+  /* ---------- NUESTRA CERVEZA ---------- */
+  .cervezas{
+    background:var(--carbon);
+    border-top:1px solid var(--linea);
+    border-bottom:1px solid var(--linea);
+  }
+  .beer-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1px;
+    background:var(--linea);
+    border:1px solid var(--linea);
+  }
+  .beer-card{
+    background:var(--carbon);
+    padding:0;
+    position:relative;
+    overflow:hidden;
+  }
+  .beer-photo{
+    height:380px;
+    position:relative;
+    overflow:hidden;
+  }
+  .beer-photo img{
+    transition:transform 0.6s ease;
+  }
+  .beer-card:hover .beer-photo img{transform:scale(1.06);}
+  .beer-photo::after{
+    content:'';
+    position:absolute;inset:0;
+    background:linear-gradient(180deg, transparent 50%, rgba(16,11,8,0.9) 100%);
+  }
+  .beer-info{
+    padding:28px 30px 34px;
+  }
+  .beer-tag{
+    font-family:'Bebas Neue', sans-serif;
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    color:var(--ambar);
+    text-transform:uppercase;
+  }
+  .beer-info h3{
+    font-size:1.5rem;
+    margin:10px 0 10px;
+    color:var(--espuma);
+  }
+  .beer-info p{
+    color:var(--hueso);
+    font-size:0.94rem;
+  }
+  .beer-stats{
+    display:flex;
+    gap:22px;
+    margin-top:18px;
+    padding-top:18px;
+    border-top:1px solid var(--linea);
+    font-size:0.78rem;
+    color:var(--hueso);
+    letter-spacing:0.04em;
+  }
+  .beer-stats b{color:var(--ambar-claro);display:block;font-size:1rem;font-family:'Fraunces',serif;}
+
+  /* ---------- HISTORIA ---------- */
+  .historia{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:0;
+    align-items:stretch;
+    padding:0;
+  }
+  .historia-img{
+    height:auto;
+    min-height:640px;
+    position:relative;
+  }
+  .historia-text{
+    padding:120px 70px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .historia-text .eyebrow{margin-bottom:16px;}
+  .historia-text h2{
+    font-size:clamp(2rem,3.4vw,2.8rem);
+    margin-bottom:26px;
+  }
+  .historia-text p{
+    color:var(--hueso);
+    margin-bottom:18px;
+    font-size:1.02rem;
+  }
+  .historia-firma{
+    margin-top:30px;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:1.3rem;
+    color:var(--ambar-claro);
+  }
+  .historia-firma span{
+    display:block;
+    font-family:'Inter',sans-serif;
+    font-style:normal;
+    font-size:0.78rem;
+    color:var(--hueso);
+    letter-spacing:0.05em;
+    margin-top:6px;
+  }
+
+  /* ---------- PROCESO / NUMEROS ---------- */
+  .proceso{
+    background:var(--carbon);
+    border-top:1px solid var(--linea);
+    border-bottom:1px solid var(--linea);
+  }
+  .proceso-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:48px;
+  }
+  .proceso-item .num{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:0.85rem;
+    color:var(--ambar);
+    letter-spacing:0.08em;
+    margin-bottom:18px;
+    display:block;
+  }
+  .proceso-item h3{
+    font-size:1.25rem;
+    color:var(--espuma);
+    margin-bottom:10px;
+  }
+  .proceso-item p{
+    color:var(--hueso);
+    font-size:0.92rem;
+  }
+
+  /* ---------- DISTRIBUIDORES ---------- */
+  .puntos{
+    position:relative;
+  }
+  .puntos-inner{
+    display:grid;
+    grid-template-columns:1.1fr 1fr;
+    gap:80px;
+    align-items:center;
+  }
+  .puntos-list{
+    display:flex;
+    flex-direction:column;
+  }
+  .punto-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    padding:22px 0;
+    border-bottom:1px solid var(--linea);
+  }
+  .punto-row:first-child{border-top:1px solid var(--linea);}
+  .punto-nombre{
+    font-family:'Fraunces',serif;
+    font-size:1.2rem;
+    color:var(--espuma);
+  }
+  .punto-zona{
+    color:var(--hueso);
+    font-size:0.85rem;
+    letter-spacing:0.03em;
+  }
+  .puntos-photo{
+    height:520px;
+    position:relative;
+    border-radius:3px;
+    overflow:hidden;
+  }
+  .puntos-photo::after{
+    content:'';
+    position:absolute;inset:0;
+    background:linear-gradient(0deg, rgba(16,11,8,0.5), transparent 50%);
+  }
+
+  /* ---------- EVENTOS ---------- */
+  .eventos{
+    background:var(--carbon);
+    border-top:1px solid var(--linea);
+    border-bottom:1px solid var(--linea);
+  }
+  .eventos-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:34px;
+  }
+  .evento-card{
+    border:1px solid var(--linea);
+    padding:34px 28px;
+    transition:border-color 0.25s, transform 0.25s;
+  }
+  .evento-card:hover{border-color:var(--ambar);transform:translateY(-4px);}
+  .evento-fecha{
+    font-family:'Bebas Neue',sans-serif;
+    color:var(--ambar);
+    font-size:0.85rem;
+    letter-spacing:0.1em;
+    margin-bottom:16px;
+  }
+  .evento-card h3{
+    font-size:1.3rem;
+    color:var(--espuma);
+    margin-bottom:12px;
+  }
+  .evento-card p{
+    color:var(--hueso);
+    font-size:0.92rem;
+  }
+
+  /* ---------- CONTACTO ---------- */
+  .contacto-inner{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:90px;
+  }
+  .contacto-text h2{
+    font-size:clamp(2.2rem,4vw,3.2rem);
+    margin-bottom:22px;
+  }
+  .contacto-text p{
+    color:var(--hueso);
+    margin-bottom:34px;
+    max-width:440px;
+  }
+  .contacto-detail{
+    margin-bottom:22px;
+  }
+  .contacto-detail .label{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:0.75rem;
+    letter-spacing:0.1em;
+    color:var(--ambar);
+    display:block;
+    margin-bottom:6px;
+  }
+  .contacto-detail .value{
+    font-size:1.05rem;
+    color:var(--espuma);
+  }
+
+  form{display:flex;flex-direction:column;gap:20px;}
+  .field{display:flex;flex-direction:column;gap:8px;}
+  .field label{
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--hueso);
+  }
+  .field input,
+  .field textarea{
+    background:transparent;
+    border:none;
+    border-bottom:1px solid var(--linea);
+    color:var(--espuma);
+    font-family:'Inter',sans-serif;
+    font-size:1rem;
+    padding:10px 2px;
+    resize:none;
+    transition:border-color 0.2s;
+  }
+  .field input:focus,
+  .field textarea:focus{
+    outline:none;
+    border-color:var(--ambar);
+  }
+  .field input::placeholder,
+  .field textarea::placeholder{color:rgba(205,191,168,0.4);}
+  .submit-btn{
+    margin-top:10px;
+    align-self:flex-start;
+    background:var(--ambar);
+    color:var(--negro);
+    border:none;
+    padding:15px 34px;
+    font-weight:600;
+    font-size:0.95rem;
+    letter-spacing:0.02em;
+    border-radius:2px;
+    cursor:pointer;
+    transition:background 0.2s, transform 0.2s;
+  }
+  .submit-btn:hover{background:var(--ambar-claro);transform:translateY(-2px);}
+  .form-note{
+    font-size:0.82rem;
+    color:var(--hueso);
+    margin-top:4px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top:1px solid var(--linea);
+    padding:60px 0 36px;
+  }
+  .footer-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:50px;
+    flex-wrap:wrap;
+    gap:40px;
+  }
+  .footer-logo{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:1.6rem;
+    letter-spacing:0.06em;
+  }
+  .footer-logo span{color:var(--ambar);}
+  .footer-tag{
+    color:var(--hueso);
+    font-size:0.92rem;
+    margin-top:12px;
+    max-width:280px;
+  }
+  .footer-cols{
+    display:flex;
+    gap:70px;
+  }
+  .footer-col h4{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:0.78rem;
+    letter-spacing:0.1em;
+    color:var(--ambar);
+    margin-bottom:18px;
+  }
+  .footer-col a{
+    display:block;
+    color:var(--hueso);
+    font-size:0.92rem;
+    margin-bottom:12px;
+    transition:color 0.2s;
+  }
+  .footer-col a:hover{color:var(--espuma);}
+  .footer-bottom{
+    display:flex;
+    justify-content:space-between;
+    padding-top:30px;
+    border-top:1px solid var(--linea);
+    font-size:0.8rem;
+    color:rgba(205,191,168,0.5);
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .footer-social{display:flex;gap:18px;}
+  .footer-social a{color:var(--hueso);transition:color 0.2s;}
+  .footer-social a:hover{color:var(--ambar);}
+
+  .reveal{
+    opacity:0;
+    transform:translateY(28px);
+    transition:opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.in{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    .hero-scroll .line{animation:none;}
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:980px){
+    .beer-grid{grid-template-columns:1fr;}
+    .historia{grid-template-columns:1fr;}
+    .historia-img{min-height:380px;order:-1;}
+    .historia-text{padding:80px 36px;}
+    .proceso-grid{grid-template-columns:repeat(2,1fr);}
+    .puntos-inner{grid-template-columns:1fr;gap:50px;}
+    .puntos-photo{height:340px;order:-1;}
+    .eventos-grid{grid-template-columns:1fr;}
+    .contacto-inner{grid-template-columns:1fr;gap:50px;}
+    .footer-cols{gap:40px;}
+  }
+
+  @media (max-width:680px){
+    .wrap{padding:0 22px;}
+    .navlinks{
+      position:fixed;
+      top:0;right:0;
+      height:100vh;
+      width:74%;
+      background:var(--carbon);
+      flex-direction:column;
+      justify-content:center;
+      align-items:flex-start;
+      padding:0 40px;
+      gap:30px;
+      transform:translateX(100%);
+      transition:transform 0.35s ease;
+      z-index:99;
+      border-left:1px solid var(--linea);
+    }
+    .navlinks.open{transform:translateX(0);}
+    .nav-cta{display:none;}
+    .burger{display:block;}
+    section{padding:90px 0;}
+    .hero-content{padding-bottom:60px;}
+    .hero-actions{flex-direction:column;align-items:flex-start;gap:16px;}
+    .proceso-grid{grid-template-columns:1fr;gap:40px;}
+    .historia-text{padding:60px 24px;}
+    .footer-top{flex-direction:column;}
+    .footer-cols{gap:50px;}
+  }
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="wrap">
+    <nav>
+      <a href="#inicio" class="logo">FORJA <span>NEGRA</span></a>
+      <div class="navlinks" id="navLinks">
+        <a href="#cerveza">Nuestra Cerveza</a>
+        <a href="#historia">Historia</a>
+        <a href="#puntos">Dónde Encontrarnos</a>
+        <a href="#eventos">Eventos</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+      <a href="#contacto" class="nav-cta">Visitanos</a>
+      <button class="burger" id="burgerBtn" aria-label="Abrir menú">☰</button>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="inicio">
+  <div class="hero-media">
+    <img src="https://images.unsplash.com/photo-1535958636474-b021ee887b13?w=1800&q=80&auto=format&fit=crop" alt="Cerveza artesanal Forja Negra servida en vaso, fondo oscuro">
+  </div>
+  <div class="wrap hero-content">
+    <span class="eyebrow">Cervecería Artesanal — Desde 2014</span>
+    <h1>Hecha al fuego lento,<br>servida sin <em>apuro</em>.</h1>
+    <p class="hero-sub">Maltas tostadas, lúpulo de cosecha propia y tiempo: los únicos atajos que no tomamos. Cada lote sale de la planta cuando está listo, no cuando conviene.</p>
+    <div class="hero-actions">
+      <a href="#cerveza" class="btn-primary">Ver nuestras cervezas</a>
+      <a href="#historia" class="btn-ghost">Conocer la historia</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Bajá</span>
+    <div class="line"></div>
+  </div>
+</section>
+
+<section class="cervezas" id="cerveza">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Nuestra Cerveza</span>
+      <h2>Cuatro estilos, una sola obsesión.</h2>
+      <p>No perseguimos tendencias. Perseguimos el punto exacto de amargor, cuerpo y aroma en cada receta, y la repetimos lote tras lote hasta que es inconfundible.</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="beer-grid reveal">
+      <div class="beer-card">
+        <div class="beer-photo">
+          <img src="https://images.unsplash.com/photo-1695605302563-d3d640811f7a?w=900&q=80&auto=format&fit=crop" alt="Forja Negra Stout, cerveza negra artesanal">
+        </div>
+        <div class="beer-info">
+          <span class="beer-tag">Stout Imperial</span>
+          <h3>Carbón</h3>
+          <p>Café tostado, cacao amargo y un final ahumado que se queda. La más densa de la casa.</p>
+          <div class="beer-stats">
+            <div><b>7.2%</b>ABV</div>
+            <div><b>45</b>IBU</div>
+            <div><b>38</b>EBC</div>
+          </div>
+        </div>
+      </div>
+      <div class="beer-card">
+        <div class="beer-photo">
+          <img src="https://images.unsplash.com/photo-1518176258769-f227c798150e?w=900&q=80&auto=format&fit=crop" alt="Forja Negra IPA, cerveza artesanal dorada con espuma">
+        </div>
+        <div class="beer-info">
+          <span class="beer-tag">India Pale Ale</span>
+          <h3>Yunque</h3>
+          <p>Cítricos, resina de pino y un amargor que golpea derecho. Lúpulo en cuatro tandas distintas.</p>
+          <div class="beer-stats">
+            <div><b>6.5%</b>ABV</div>
+            <div><b>62</b>IBU</div>
+            <div><b>14</b>EBC</div>
+          </div>
+        </div>
+      </div>
+      <div class="beer-card">
+        <div class="beer-photo">
+          <img src="https://images.unsplash.com/photo-1608270586620-248524c67de9?w=900&q=80&auto=format&fit=crop" alt="Forja Negra Amber Ale, cerveza artesanal color cobre">
+        </div>
+        <div class="beer-info">
+          <span class="beer-tag">Amber Ale</span>
+          <h3>Brasa</h3>
+          <p>Caramelo, miel oscura y un cuerpo medio que no cansa. La que se toma sin pensar, lote tras lote.</p>
+          <div class="beer-stats">
+            <div><b>5.4%</b>ABV</div>
+            <div><b>28</b>IBU</div>
+            <div><b>22</b>EBC</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="historia" id="historia">
+  <div class="historia-img">
+    <img src="https://images.unsplash.com/photo-1584225064785-c62a8b43d148?w=1200&q=80&auto=format&fit=crop" alt="Maestro cervecero trabajando en la planta de Forja Negra">
+  </div>
+  <div class="historia-text reveal">
+    <span class="eyebrow">Nuestra Historia</span>
+    <h2>Empezamos en un galpón con tres ollas y una idea fija.</h2>
+    <p>Forja Negra nació en 2014 en un taller mecánico reconvertido, con equipo de segunda mano y recetas anotadas a mano. No teníamos plan de negocios. Teníamos una pregunta: ¿por qué la cerveza buena tenía que venir de afuera?</p>
+    <p>Diez años después seguimos puliendo las mismas cuatro recetas en lugar de sumar veinte nuevas. Compramos el lúpulo a productores que conocemos por nombre y maltamos con el mismo proveedor desde el primer día. Lo que cambió es el tamaño de las ollas, no la manera de pensar.</p>
+    <div class="historia-firma">"Una cerveza no se apura, se acompaña."
+      <span>— Fundadores, Forja Negra</span>
+    </div>
+  </div>
+</section>
+
+<section class="proceso">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Cómo Trabajamos</span>
+      <h2>De la malta al vaso, sin saltarnos pasos.</h2>
+    </div>
+    <div class="proceso-grid reveal">
+      <div class="proceso-item">
+        <span class="num">MALTEADO</span>
+        <h3>Selección</h3>
+        <p>Maltas y lúpulo elegidos lote a lote, no por catálogo. Probamos antes de comprar.</p>
+      </div>
+      <div class="proceso-item">
+        <span class="num">COCCIÓN</span>
+        <h3>Cocina</h3>
+        <p>Macerado y hervido a fuego controlado, vigilado a mano en cada tanda.</p>
+      </div>
+      <div class="proceso-item">
+        <span class="num">FERMENTACIÓN</span>
+        <h3>Espera</h3>
+        <p>El tiempo que cada estilo necesita, nunca el que conviene al calendario.</p>
+      </div>
+      <div class="proceso-item">
+        <span class="num">ENVASADO</span>
+        <h3>Salida</h3>
+        <p>Filtrado mínimo, carbonatación natural y etiqueta puesta a mano, una por una.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="puntos" id="puntos">
+  <div class="wrap puntos-inner">
+    <div class="reveal">
+      <div class="section-head" style="margin-bottom:40px;">
+        <span class="eyebrow">Dónde Encontrarnos</span>
+        <h2>En la barra de siempre, no en cualquier lado.</h2>
+        <p>Elegimos a nuestros distribuidores tan cuidadosamente como elegimos el lúpulo.</p>
+      </div>
+      <div class="puntos-list">
+        <div class="punto-row">
+          <span class="punto-nombre">Bar El Fogón</span>
+          <span class="punto-zona">Centro</span>
+        </div>
+        <div class="punto-row">
+          <span class="punto-nombre">Almacén Don Lucas</span>
+          <span class="punto-zona">Zona Norte</span>
+        </div>
+        <div class="punto-row">
+          <span class="punto-nombre">Cervecería La Posta</span>
+          <span class="punto-zona">Centro</span>
+        </div>
+        <div class="punto-row">
+          <span class="punto-nombre">Mercado de Productores</span>
+          <span class="punto-zona">Sábados, Plaza Mayor</span>
+        </div>
+        <div class="punto-row">
+          <span class="punto-nombre">Despensa Sur</span>
+          <span class="punto-zona">Zona Sur</span>
+        </div>
+      </div>
+    </div>
+    <div class="puntos-photo reveal">
+      <img src="https://images.unsplash.com/photo-1687771454203-97d0b08bbeb2?w=900&q=80&auto=format&fit=crop" alt="Barra de bar con cervezas artesanales Forja Negra servidas">
+    </div>
+  </div>
+</section>
+
+<section class="eventos" id="eventos">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Próximos Eventos</span>
+      <h2>La cervecería abre sus puertas.</h2>
+      <p>Visitas guiadas, catas y lanzamientos de temporada. Cupo limitado en cada fecha.</p>
+    </div>
+    <div class="eventos-grid reveal">
+      <div class="evento-card">
+        <div class="evento-fecha">12 JULIO — 18:00</div>
+        <h3>Visita guiada a planta</h3>
+        <p>Recorrido completo por el proceso de elaboración, con degustación de las cuatro recetas.</p>
+      </div>
+      <div class="evento-card">
+        <div class="evento-fecha">26 JULIO — 19:30</div>
+        <h3>Lanzamiento Brasa de Invierno</h3>
+        <p>Presentamos la edición limitada de temporada, maridada con tabla de quesos locales.</p>
+      </div>
+      <div class="evento-card">
+        <div class="evento-fecha">9 AGOSTO — 17:00</div>
+        <h3>Cata a ciegas</h3>
+        <p>Comparamos nuestras recetas contra estilos clásicos. Sin etiquetas, solo paladar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="wrap contacto-inner">
+    <div class="reveal">
+      <span class="eyebrow">Contacto</span>
+      <h2>Escribinos, te contestamos nosotros.</h2>
+      <p>Consultas por distribución, eventos privados o visitas a la planta. Sin bots, sin demoras innecesarias.</p>
+      <div class="contacto-detail">
+        <span class="label">Planta y Visitas</span>
+        <span class="value">Ruta 7, Km 12, La Rioja</span>
+      </div>
+      <div class="contacto-detail">
+        <span class="label">Teléfono</span>
+        <span class="value">+54 9 380 000-0000</span>
+      </div>
+      <div class="contacto-detail">
+        <span class="label">Correo</span>
+        <span class="value">hola@forjanegra.com.ar</span>
+      </div>
+    </div>
+    <form class="reveal" id="contactForm">
+      <div class="field">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+      </div>
+      <div class="field">
+        <label for="email">Correo</label>
+        <input type="email" id="email" name="email" placeholder="tu@correo.com" required>
+      </div>
+      <div class="field">
+        <label for="motivo">Motivo</label>
+        <input type="text" id="motivo" name="motivo" placeholder="Distribución, evento, visita...">
+      </div>
+      <div class="field">
+        <label for="mensaje">Mensaje</label>
+        <textarea id="mensaje" name="mensaje" rows="4" placeholder="Contanos qué necesitás" required></textarea>
+      </div>
+      <button type="submit" class="submit-btn">Enviar mensaje</button>
+      <span class="form-note" id="formNote"></span>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">FORJA <span>NEGRA</span></div>
+        <p class="footer-tag">Cervecería artesanal. Ruta 7, Km 12, La Rioja, Argentina.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>NAVEGAR</h4>
+          <a href="#cerveza">Nuestra Cerveza</a>
+          <a href="#historia">Historia</a>
+          <a href="#puntos">Puntos de Venta</a>
+          <a href="#eventos">Eventos</a>
+        </div>
+        <div class="footer-col">
+          <h4>CONTACTO</h4>
+          <a href="mailto:hola@forjanegra.com.ar">hola@forjanegra.com.ar</a>
+          <a href="tel:+5493800000000">+54 9 380 000-0000</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Forja Negra. Todos los derechos reservados.</span>
+      <div class="footer-social">
+        <a href="#" aria-label="Instagram">Instagram</a>
+        <a href="#" aria-label="Facebook">Facebook</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  const burger = document.getElementById('burgerBtn');
+  const navLinks = document.getElementById('navLinks');
+  burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  const form = document.getElementById('contactForm');
+  const note = document.getElementById('formNote');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    note.textContent = 'Mensaje enviado. Te respondemos a la brevedad.';
+    form.reset();
+  });
+</script>
+
+</body>
+</html>
